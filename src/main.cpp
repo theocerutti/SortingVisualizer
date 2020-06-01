@@ -1,34 +1,33 @@
 /*
 ** EPITECH PROJECT, 2020
-** $HEADER_FILENAME
+** main.cpp
 ** File description:
 **
 */
 
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
+#include "Visualizer.hpp"
+#include "BubbleSort.hpp"
+
 int main()
 {
-    // Create the main window
-    sf::RenderWindow window(sf::VideoMode(800, 600), "SFML window");
+    sf::RenderWindow window(sf::VideoMode(800, 600), "Sorting Visualizeur");
 
+    std::shared_ptr<BubbleSort<int>> bubbleSort = std::make_shared<BubbleSort<int>>();
+    Visualizer<int> visualizer;
+    visualizer.setSortingAlgo(bubbleSort.get());
+    visualizer.setDataFromRandom(0, 100, 100);
 
-    // Start the game loop
-    while (window.isOpen())
-    {
-        // Process events
+    while (window.isOpen()) {
         sf::Event event;
-        while (window.pollEvent(event))
-        {
-            // Close window: exit
+        while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed)
                 window.close();
         }
-        // Clear screen
         window.clear();
-        // Draw the sprite
-
-        // Update the window
+        visualizer.update();
+        window.draw(visualizer);
         window.display();
     }
     return EXIT_SUCCESS;
