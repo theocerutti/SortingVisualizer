@@ -1,0 +1,13 @@
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+sorting_visualizeur
+CMakeFiles
+cmake-build-debug
+*.cbp
+.idea/
+.vscode/
+tests/
+test/
+build
+.vs/
