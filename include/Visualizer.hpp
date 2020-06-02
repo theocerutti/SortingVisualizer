@@ -13,6 +13,7 @@
 #include <memory>
 #include <iostream>
 #include <chrono>
+#include <thread>
 #include "ISortAlgo.hpp"
 #include "utils.hpp"
 
@@ -33,6 +34,11 @@ public:
        const sf::Color &colorBar = {255, 255, 255, 255},
        bool reverse = false
     );
+
+    /*
+     * Deconstructor
+     */
+    ~Visualizer() override;
 
     /*
      * Draw function
@@ -124,6 +130,8 @@ private:
     sf::Clock _clockUpdate;
     sf::Clock _clockFinish;
     int _barSucceed{0};
+    std::thread _sortingThread;
+    bool _firstUpdate{true};
 };
 
 #endif //SORTINGVISUALIZEUR_VISUALIZER_HPP

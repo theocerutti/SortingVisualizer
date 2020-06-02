@@ -7,7 +7,7 @@
 
 #include "sortingAlgo/MergeSort.hpp"
 
-void MergeSort::sort(std::vector<int> &toSort)
+void MergeSort::sort(std::vector<int> &toSort, float msToWaitAfterUpdate)
 {
 
 }

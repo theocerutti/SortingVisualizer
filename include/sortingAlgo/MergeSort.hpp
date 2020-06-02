@@ -9,13 +9,11 @@
 #define SORTINGVISUALIZER_MERGESORT_HPP
 
 #include "ISortAlgo.hpp"
-#include <algorithm>
-#include <random>
 
-class MergeSort : ISortAlgo {
+class MergeSort : public ISortAlgo {
 public:
     MergeSort() = default;
-    void sort(std::vector<int> &toSort) override;
+    void sort(std::vector<int> &toSort, float msToWaitAfterUpdate) override;
 };
 
 #endif //SORTINGVISUALIZER_MERGESORT_HPP

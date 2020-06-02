@@ -21,17 +21,26 @@ Visualizer::Visualizer(const sf::Vector2f &position,
 {
 }
 
+Visualizer::~Visualizer()
+{
+    if (_sortingThread.joinable())
+        _sortingThread.join();
+}
+
 void Visualizer::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
     for (const sf::RectangleShape &bar : _bars)
-    target.draw(bar);
+        target.draw(bar);
 }
 
 void Visualizer::update()
 {
+    if (_firstUpdate) {
+        _sortingThread = std::thread([this]() { _sortingAlgo->sort(_data, _msToWaitAfterUpdate); });
+        _firstUpdate = false;
+    }
     if (_sortingAlgo && _data.size() > 1 && _state != State::Pause) {
         if (_state == State::Sort && _clockUpdate.getElapsedTime().asMilliseconds() > _msToWaitAfterUpdate) {
-            _sortingAlgo->sort(_data);
             for (int i = 0; i < _data.size(); i++) {
                 _bars[i].setFillColor(_colorBar);
                 float sizeX = static_cast<float>(_dimension.x - (_shapeOffset.x * 2.f + _data.size()));
@@ -48,6 +57,10 @@ void Visualizer::update()
             }
             if (std::is_sorted(_data.begin(), _data.end()))
                 _state = State::Finish;
+            if (_state == State::Finish) {
+                if (_sortingThread.joinable())
+                    _sortingThread.join();
+            }
             _clockUpdate.restart();
         } else if (_state == State::Finish && _clockFinish.getElapsedTime().asMilliseconds() > _msToWaitAfterCheckFinish) {
             if (_barSucceed < _data.size()) {

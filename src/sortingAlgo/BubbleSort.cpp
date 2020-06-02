@@ -7,16 +7,16 @@
 
 #include "sortingAlgo/BubbleSort.hpp"
 
-void BubbleSort::sort(std::vector<int> &toSort)
+void BubbleSort::sort(std::vector<int> &toSort, float msToWaitAfterUpdate)
 {
-    if (_i > toSort.size())
-        return;
-    for (int j = 0; j < toSort.size() - 1; j++) {
-        if (toSort[j] > toSort[j+1]) {
-            int temp = toSort[j];
-            toSort[j] = toSort[j+1];
-            toSort[j+1] = temp;
+    for (int i = 0; i < toSort.size(); i++) {
+        for (int j = 0; j < toSort.size() - 1; j++) {
+            if (toSort[j] > toSort[j + 1]) {
+                int temp = toSort[j];
+                toSort[j] = toSort[j + 1];
+                toSort[j + 1] = temp;
+            }
         }
+        waitFor(msToWaitAfterUpdate);
     }
-    _i++;
 }

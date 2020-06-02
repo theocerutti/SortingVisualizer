@@ -41,6 +41,8 @@ if (WIN32)
     file(COPY ${SFML_DLLS} DESTINATION ${CMAKE_BINARY_DIR})
     target_link_libraries(${BINARY_NAME} ${SFML_LIBRARIES})
 else()
+    # Add phtread library
+    target_link_libraries(${BINARY_NAME} "pthread")
     include_directories("${CMAKE_MODULE_PATH}/SFML/include")
     set(SFML_LIBRARIES
         "${CMAKE_MODULE_PATH}/SFML/linux/libsfml-audio.so.2.5.1"
