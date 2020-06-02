@@ -10,13 +10,12 @@
 
 #include <vector>
 
-template<typename T>
 class ISortAlgo {
 public:
     /*
      * Called each frame. Need to do one action
      */
-    virtual void sort(std::vector<T> &toSort) = 0;
+    virtual void sort(std::vector<int> &toSort) = 0;
 };
 
 #endif //SORTINGVISUALIZER_ISORTALGO_HPP

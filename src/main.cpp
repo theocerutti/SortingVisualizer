@@ -8,16 +8,16 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include "Visualizer.hpp"
-#include "BubbleSort.hpp"
+#include "sortingAlgo/BubbleSort.hpp"
 
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(800, 600), "Sorting Visualizeur");
 
-    std::shared_ptr<BubbleSort<int>> bubbleSort = std::make_shared<BubbleSort<int>>();
-    Visualizer<int> visualizer;
+    std::shared_ptr<BubbleSort> bubbleSort = std::make_shared<BubbleSort>();
+    Visualizer visualizer;
     visualizer.setSortingAlgo(bubbleSort.get());
-    visualizer.setDataFromRandom(0, 100, 100);
+    visualizer.setDataFromRandom(0, 100,  250);
 
     while (window.isOpen()) {
         sf::Event event;

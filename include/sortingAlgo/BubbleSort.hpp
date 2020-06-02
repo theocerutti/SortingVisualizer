@@ -12,13 +12,12 @@
 #include <algorithm>
 #include <random>
 
-template<typename T>
-class BubbleSort : public ISortAlgo<T> {
+class BubbleSort : public ISortAlgo {
 public:
     BubbleSort() = default;
-    void sort(std::vector<T> &toSort) override;
+    void sort(std::vector<int> &toSort) override;
+private:
+    int _i{0};
 };
-
-#include "../src/BubbleSort.cpp"
 
 #endif //SORTINGVISUALIZER_BUBBLESORT_HPP

@@ -7,37 +7,30 @@
 
 #include "Visualizer.hpp"
 
-#ifndef SORTINGVISUALIZER_VISUALIZEUR_CPP
-#define SORTINGVISUALIZER_VISUALIZEUR_CPP
-
-template<typename T>
-Visualizer<T>::Visualizer(const sf::Vector2f &position,
-                          const sf::Vector2f &dimension,
-                          const sf::Vector2f &shapeOffset,
-                          const sf::Color &colorBar,
-                          bool isReverse)
-    : _randomEngine(std::chrono::system_clock::now().time_since_epoch().count()),
-    _isReverse(isReverse),
-    _position(position),
-    _dimension(dimension),
-    _shapeOffset(shapeOffset),
-    _colorBar(colorBar)
+Visualizer::Visualizer(const sf::Vector2f &position,
+                       const sf::Vector2f &dimension,
+                       const sf::Vector2f &shapeOffset,
+                       const sf::Color &colorBar,
+                       bool reverse) :
+        _randomEngine(std::chrono::system_clock::now().time_since_epoch().count()),
+        _isReverse(reverse),
+        _position(position),
+        _dimension(dimension),
+        _shapeOffset(shapeOffset),
+        _colorBar(colorBar)
 {
-
 }
 
-template<typename T>
-void Visualizer<T>::draw(sf::RenderTarget &target, sf::RenderStates states) const
+void Visualizer::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    for (auto &bar : _bars)
-        target.draw(bar);
+    for (const sf::RectangleShape &bar : _bars)
+    target.draw(bar);
 }
 
-template<typename T>
-void Visualizer<T>::update()
+void Visualizer::update()
 {
-    if (_sortingAlgo && _clockUpdate.getElapsedTime().asMilliseconds() > _msToWaitAfterUpdate && _state != State::Pause) {
-        if (_state == State::Sort) {
+    if (_sortingAlgo && _data.size() > 1 && _state != State::Pause) {
+        if (_state == State::Sort && _clockUpdate.getElapsedTime().asMilliseconds() > _msToWaitAfterUpdate) {
             _sortingAlgo->sort(_data);
             for (int i = 0; i < _data.size(); i++) {
                 _bars[i].setFillColor(_colorBar);
@@ -45,21 +38,22 @@ void Visualizer<T>::update()
                 if (sizeX < _data.size())
                     throw std::runtime_error("Visualizer is too small. Width must be greater than or equal (>=) to the half of the size of the contained data. (size.x >= data.size() / 2).");
                 _bars[i].setSize(sf::Vector2f(
-                    sizeX / _data.size(),
-                    my::lerp<float>(0.f, _dimension.y - _shapeOffset.y * 2.f, ((float)_data[i] / (float)_maxElement)))
+                        sizeX / _data.size(),
+                        my::lerp<float>(0.f, _dimension.y - _shapeOffset.y * 2.f, ((float)_data[i] / (float)_maxElement)))
                 );
                 _bars[i].setPosition(
-                    _position.x + _shapeOffset.x + (i * _bars[i].getSize().x) + i,
-                    _isReverse ? (_position.y + _shapeOffset.y) : (_position.y - _shapeOffset.y - _bars[i].getSize().y + _dimension.y)
+                        _position.x + _shapeOffset.x + (i * _bars[i].getSize().x) + i,
+                        _isReverse ? (_position.y + _shapeOffset.y) : (_position.y - _shapeOffset.y - _bars[i].getSize().y + _dimension.y)
                 );
-                if (std::is_sorted(_data.begin(), _data.end()))
-                    _state = State::Finish;
             }
+            if (std::is_sorted(_data.begin(), _data.end()))
+                _state = State::Finish;
             _clockUpdate.restart();
-        } else if (_state == State::Finish) {
+        } else if (_state == State::Finish && _clockFinish.getElapsedTime().asMilliseconds() > _msToWaitAfterCheckFinish) {
             if (_barSucceed < _data.size()) {
                 _bars[_barSucceed].setFillColor(sf::Color(0, 255, 0, 255));
                 _barSucceed += 1;
+                _clockFinish.restart();
             } else {
                 _state = State::Pause;
             }
@@ -67,16 +61,14 @@ void Visualizer<T>::update()
     }
 }
 
-template<typename T>
-void Visualizer<T>::setSortingAlgo(ISortAlgo<T> *algo)
+void Visualizer::setSortingAlgo(ISortAlgo *algo)
 {
     _sortingAlgo = algo;
 }
 
-template<typename T>
-void Visualizer<T>::setDataFromRandom(int min, int max, int nb)
+void Visualizer::setDataFromRandom(int min, int max, int nb)
 {
-    std::uniform_int_distribution<T> distrib(min, max);
+    std::uniform_int_distribution<int> distrib(min, max);
 
     _data.clear();
     _bars.clear();
@@ -88,8 +80,7 @@ void Visualizer<T>::setDataFromRandom(int min, int max, int nb)
     _maxElement = *it;
 }
 
-template<typename T>
-void Visualizer<T>::setDataFrom(const std::vector<T> &dataVec)
+void Visualizer::setDataFrom(const std::vector<int> &dataVec)
 {
     _data = dataVec;
     _bars.clear();
@@ -99,82 +90,82 @@ void Visualizer<T>::setDataFrom(const std::vector<T> &dataVec)
     _maxElement = *it;
 }
 
-template<typename T>
-void Visualizer<T>::setUpdateTime(float ms)
+float Visualizer::getUpdateTime() const
+{
+    return (_msToWaitAfterUpdate);
+}
+
+void Visualizer::setUpdateTime(float ms)
 {
     _msToWaitAfterUpdate = ms;
 }
 
-template<typename T>
-bool Visualizer<T>::isReverse() const
+bool Visualizer::isReverse() const
 {
     return (_isReverse);
 }
 
-template<typename T>
-void Visualizer<T>::setReverse(bool isReverse)
+void Visualizer::setReverse(bool isReverse)
 {
     _isReverse = isReverse;
 }
 
-template<typename T>
-const sf::Vector2f &Visualizer<T>::getPosition() const
+const sf::Vector2f &Visualizer::getPosition() const
 {
     return (_position);
 }
 
-template<typename T>
-void Visualizer<T>::setPosition(const sf::Vector2f &position)
+void Visualizer::setPosition(const sf::Vector2f &position)
 {
     _position = position;
 }
 
-template<typename T>
-const sf::Vector2f &Visualizer<T>::getDimension() const
+const sf::Vector2f &Visualizer::getDimension() const
 {
     return (_dimension);
 }
 
-template<typename T>
-void Visualizer<T>::setDimension(const sf::Vector2f &dimension)
+void Visualizer::setDimension(const sf::Vector2f &dimension)
 {
     _dimension = dimension;
 }
 
-template<typename T>
-const sf::Vector2f &Visualizer<T>::getShapeOffset() const
+const sf::Vector2f &Visualizer::getShapeOffset() const
 {
     return (_shapeOffset);
 }
 
-template<typename T>
-void Visualizer<T>::setShapeOffset(const sf::Vector2f &shapeOffset)
+void Visualizer::setShapeOffset(const sf::Vector2f &shapeOffset)
 {
     _shapeOffset = shapeOffset;
 }
 
-template<typename T>
-const sf::Color &Visualizer<T>::getColorBar() const
+const sf::Color &Visualizer::getColorBar() const
 {
     return (_colorBar);
 }
 
-template<typename T>
-void Visualizer<T>::setColorBar(const sf::Color &colorBar)
+void Visualizer::setColorBar(const sf::Color &colorBar)
 {
     _colorBar = colorBar;
 }
 
-template<typename T>
-const typename Visualizer<T>::State &Visualizer<T>::getState() const
+const typename Visualizer::State &Visualizer::getState() const
 {
     return (_state);
 }
 
-template<typename T>
-void Visualizer<T>::setState(const Visualizer::State &state)
+void Visualizer::setState(const Visualizer::State &state)
 {
     _state = state;
 }
 
-#endif
+void Visualizer::setFinishTime(float ms)
+{
+    _msToWaitAfterCheckFinish = ms;
+}
+
+float Visualizer::getFinishTime() const
+{
+    return (_msToWaitAfterCheckFinish);
+}

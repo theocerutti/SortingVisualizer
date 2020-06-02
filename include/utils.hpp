@@ -8,6 +8,8 @@
 #ifndef SORTINGVISUALIZER_UTILS_HPP
 #define SORTINGVISUALIZER_UTILS_HPP
 
+#include <iostream>
+
 namespace my {
     template<typename T = float>
     T clamp(const T& n, const T& lower, const T& upper) {
