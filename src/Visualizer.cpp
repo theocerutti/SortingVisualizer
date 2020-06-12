@@ -33,13 +33,22 @@ void Visualizer::draw(sf::RenderTarget &target, sf::RenderStates states) const
         target.draw(bar);
 }
 
+void Visualizer::restart()
+{
+    _state = State::Sort;
+    _firstUpdate = true;
+    _barSucceed = 0;
+    _clockUpdate.restart();
+    _clockFinish.restart();
+}
+
 void Visualizer::update()
 {
     if (_firstUpdate) {
         _sortingThread = std::thread([this]() { _sortingAlgo->sort(_data, _msToWaitAfterUpdate); });
         _firstUpdate = false;
     }
-    if (_sortingAlgo && _data.size() > 1 && _state != State::Pause) {
+    if (_sortingAlgo && _data.size() > 1) {
         if (_state == State::Sort && _clockUpdate.getElapsedTime().asMilliseconds() > _msToWaitAfterUpdate) {
             for (int i = 0; i < _data.size(); i++) {
                 _bars[i].setFillColor(_colorBar);
@@ -56,19 +65,20 @@ void Visualizer::update()
                 );
             }
             if (std::is_sorted(_data.begin(), _data.end()))
-                _state = State::Finish;
-            if (_state == State::Finish) {
+                _state = State::Checking;
+            if (_state == State::Checking) {
                 if (_sortingThread.joinable())
                     _sortingThread.join();
             }
             _clockUpdate.restart();
-        } else if (_state == State::Finish && _clockFinish.getElapsedTime().asMilliseconds() > _msToWaitAfterCheckFinish) {
+        } else if (_state == State::Checking && _clockFinish.getElapsedTime().asMilliseconds() > _msToWaitAfterCheckFinish) {
             if (_barSucceed < _data.size()) {
                 _bars[_barSucceed].setFillColor(sf::Color(0, 255, 0, 255));
                 _barSucceed += 1;
                 _clockFinish.restart();
             } else {
-                _state = State::Pause;
+                _barSucceed = 0;
+                _state = State::Finish;
             }
         }
     }
@@ -163,16 +173,6 @@ void Visualizer::setColorBar(const sf::Color &colorBar)
     _colorBar = colorBar;
 }
 
-const typename Visualizer::State &Visualizer::getState() const
-{
-    return (_state);
-}
-
-void Visualizer::setState(const Visualizer::State &state)
-{
-    _state = state;
-}
-
 void Visualizer::setFinishTime(float ms)
 {
     _msToWaitAfterCheckFinish = ms;
@@ -181,4 +181,14 @@ void Visualizer::setFinishTime(float ms)
 float Visualizer::getFinishTime() const
 {
     return (_msToWaitAfterCheckFinish);
+}
+
+const typename Visualizer::State &Visualizer::getState() const
+{
+    return (_state);
+}
+
+void Visualizer::setState(const State &state)
+{
+    _state = state;
 }

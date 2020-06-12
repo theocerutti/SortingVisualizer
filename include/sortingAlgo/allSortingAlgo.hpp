@@ -9,7 +9,6 @@
 #define SORTINGVISUALIZER_ALLSORTINGALGO_HPP
 
 #include "BubbleSort.hpp"
-#include "MergeSort.hpp"
 #include "SelectionSort.hpp"
 #include "InsertionSort.hpp"
 #include "IterativeMergeSort.hpp"

@@ -14,11 +14,12 @@ int main()
 {
     sf::RenderWindow window(sf::VideoMode(800, 600), "Sorting Visualizeur");
 
-    auto sortAlgo = std::make_shared<CocktailSort>();
-    Visualizer visualizer;
-    visualizer.setUpdateTime(3);
-    visualizer.setSortingAlgo(sortAlgo.get());
-    visualizer.setDataFromRandom(0, 100,  300);
+    auto sortAlgo = std::make_shared<SelectionSort>();
+    Visualizer visualizer1;
+    visualizer1.setUpdateTime(3);
+    visualizer1.setFinishTime(0.3);
+    visualizer1.setSortingAlgo(sortAlgo.get());
+    visualizer1.setDataFromRandom(0, 100,  200);
 
     while (window.isOpen()) {
         sf::Event event;
@@ -27,8 +28,8 @@ int main()
                 window.close();
         }
         window.clear();
-        visualizer.update();
-        window.draw(visualizer);
+        visualizer1.update();
+        window.draw(visualizer1);
         window.display();
     }
     return EXIT_SUCCESS;

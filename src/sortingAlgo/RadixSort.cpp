@@ -11,7 +11,7 @@ void RadixSort::sort(std::vector<int> &toSort, float msToWaitAfterUpdate)
 {
     int max = getMax(toSort, toSort.size());
     for (int exp = 1; max / exp > 0; exp *= 10)
-        countSort(toSort, toSort.size() + 1, exp, msToWaitAfterUpdate);
+        countSort(toSort, toSort.size(), exp, msToWaitAfterUpdate);
 }
 
 void RadixSort::countSort(std::vector<int> &toSort, int n, int exp, float ms)

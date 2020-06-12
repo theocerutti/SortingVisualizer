@@ -18,9 +18,10 @@
 #include "utils.hpp"
 
 class Visualizer : public sf::Drawable {
+public:
     enum class State {
         Sort,
-        Pause,
+        Checking,
         Finish
     };
 public:
@@ -112,6 +113,8 @@ public:
      */
     const State &getState() const;;
     void setState(const State &state);
+
+    void restart();
 protected:
     std::vector<int> _data;
     ISortAlgo *_sortingAlgo{nullptr};

@@ -6,10 +6,11 @@
 */
 
 #include "sortingAlgo/IterativeQuickSort.hpp"
+#include <iostream>
 
 void IterativeQuickSort::sort(std::vector<int> &toSort, float msToWaitAfterUpdate)
 {
-    quickSort(toSort, 0, toSort.size(), msToWaitAfterUpdate);
+    quickSort(toSort, 0, toSort.size() - 1, msToWaitAfterUpdate);
 }
 
 void IterativeQuickSort::quickSort(std::vector<int> &toSort, int l, int h, float ms)
@@ -23,6 +24,7 @@ void IterativeQuickSort::quickSort(std::vector<int> &toSort, int l, int h, float
 
 int IterativeQuickSort::partition(std::vector<int> &toSort, int l, int h, float ms)
 {
+    std::cout << h << " " << toSort.size() << std::endl;
     int x = toSort[h];
     int i = (l - 1);
 

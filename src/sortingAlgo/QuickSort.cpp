@@ -9,7 +9,7 @@
 
 void QuickSort::sort(std::vector<int> &toSort, float msToWaitAfterUpdate)
 {
-    quickSort(toSort, 0, toSort.size(), msToWaitAfterUpdate);
+    quickSort(toSort, 0, toSort.size() - 1, msToWaitAfterUpdate);
 }
 
 void QuickSort::quickSort(std::vector<int> &toSort, int low, int high, float ms)

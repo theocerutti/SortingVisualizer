@@ -9,7 +9,7 @@
 
 void IterativeMergeSort::sort(std::vector<int> &toSort, float msToWaitAfterUpdate)
 {
-    mergeSort(toSort, 0, toSort.size(), msToWaitAfterUpdate);
+    mergeSort(toSort, 0, toSort.size() - 1, msToWaitAfterUpdate);
 }
 
 void IterativeMergeSort::mergeSort(std::vector<int> &toSort, int l, int r, float ms)
@@ -28,7 +28,8 @@ void IterativeMergeSort::merge(std::vector<int> &toSort, int l, int m, int r, fl
     int n1 = m - l + 1;
     int n2 =  r - m;
 
-    int L[n1], R[n2];
+    int L[n1];
+    int R[n2];
 
     for (i = 0; i < n1; i++)
         L[i] = toSort[l + i];
