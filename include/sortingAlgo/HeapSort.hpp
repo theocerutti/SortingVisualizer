@@ -1,10 +1,3 @@
-/*
-** EPITECH PROJECT, 2020
-** HeapSort.hpp
-** File description:
-**
-*/
-
 #ifndef SORTINGVISUALIZER_HEAPSORT_HPP
 #define SORTINGVISUALIZER_HEAPSORT_HPP
 
