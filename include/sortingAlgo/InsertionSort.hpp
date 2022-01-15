@@ -1,10 +1,3 @@
-/*
-** EPITECH PROJECT, 2020
-** InsertionSort.hpp
-** File description:
-**
-*/
-
 #ifndef SORTINGVISUALIZER_INSERTIONSORT_HPP
 #define SORTINGVISUALIZER_INSERTIONSORT_HPP
 
