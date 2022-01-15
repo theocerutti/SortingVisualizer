@@ -1,10 +1,3 @@
-/*
-** EPITECH PROJECT, 2020
-** Visualizer.hpp
-** File description:
-**
-*/
-
 #ifndef SORTINGVISUALIZER_VISUALIZEUR_HPP
 #define SORTINGVISUALIZER_VISUALIZEUR_HPP
 
