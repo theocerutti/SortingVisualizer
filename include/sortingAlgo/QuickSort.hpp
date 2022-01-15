@@ -1,10 +1,3 @@
-/*
-** EPITECH PROJECT, 2020
-** QuickSort.hpp
-** File description:
-**
-*/
-
 #ifndef SORTINGVISUALIZER_QUICKSORT_HPP
 #define SORTINGVISUALIZER_QUICKSORT_HPP
 
