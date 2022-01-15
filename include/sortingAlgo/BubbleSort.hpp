@@ -1,10 +1,3 @@
-/*
-** EPITECH PROJECT, 2020
-** BubbleSort.hpp
-** File description:
-**
-*/
-
 #ifndef SORTINGVISUALIZER_BUBBLESORT_HPP
 #define SORTINGVISUALIZER_BUBBLESORT_HPP
 
