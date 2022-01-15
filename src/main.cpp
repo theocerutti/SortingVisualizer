@@ -12,7 +12,7 @@
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(800, 600), "Sorting Visualizeur");
+    sf::RenderWindow window(sf::VideoMode(800, 600), "Sorting Visualizer");
 
     auto sortAlgo = std::make_shared<SelectionSort>();
     Visualizer visualizer1;
