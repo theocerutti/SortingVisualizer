@@ -1,10 +1,3 @@
-/*
-** EPITECH PROJECT, 2020
-** main.cpp
-** File description:
-**
-*/
-
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include "Visualizer.hpp"
