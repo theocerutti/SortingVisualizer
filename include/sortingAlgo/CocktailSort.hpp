@@ -1,10 +1,3 @@
-/*
-** EPITECH PROJECT, 2020
-** CocktailSort.hpp
-** File description:
-**
-*/
-
 #ifndef SORTINGVISUALIZER_COCKTAILSORT_HPP
 #define SORTINGVISUALIZER_COCKTAILSORT_HPP
 
