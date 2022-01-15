@@ -1,10 +1,3 @@
-/*
-** EPITECH PROJECT, 2020
-** Visualizer.hpp
-** File description:
-**
-*/
-
 #include "Visualizer.hpp"
 
 Visualizer::Visualizer(const sf::Vector2f &position,
