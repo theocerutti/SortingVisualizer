@@ -1,10 +1,3 @@
-/*
-** EPITECH PROJECT, 2020
-** RadixSort.hpp
-** File description:
-**
-*/
-
 #ifndef SORTINGVISUALIZER_RADIXSORT_HPP
 #define SORTINGVISUALIZER_RADIXSORT_HPP
 
