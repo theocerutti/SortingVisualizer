@@ -1,10 +1,3 @@
-/*
-** EPITECH PROJECT, 2020
-** IterativeMergeSort.hpp
-** File description:
-**
-*/
-
 #ifndef SORTINGVISUALIZER_ITERATIVEMERGESORT_HPP
 #define SORTINGVISUALIZER_ITERATIVEMERGESORT_HPP
 
