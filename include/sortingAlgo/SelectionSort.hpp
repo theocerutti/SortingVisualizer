@@ -1,10 +1,3 @@
-/*
-** EPITECH PROJECT, 2020
-** SelectionSort.hpp
-** File description:
-**
-*/
-
 #ifndef SORTINGVISUALIZER_SELECTIONSORT_HPP
 #define SORTINGVISUALIZER_SELECTIONSORT_HPP
 
